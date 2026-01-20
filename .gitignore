@@ -11,6 +11,9 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
 *.xccheckout
 *.moved-aside
 *.xcuserstate
@@ -30,8 +33,9 @@ Pods/
 *.xcworkspace
 !default.xcworkspace
 
-# Config files with sensitive data
+# Config files with sensitive data (IMPORTANT!)
 **/Config.plist
+Config.plist
 
 # macOS
 .DS_Store
@@ -44,6 +48,11 @@ Pods/
 *.swp
 *.swo
 *~
+
+# Temporary files
+*.tmp
+*.temp
+*.log
 
 # Source Packages
 SourcePackages/

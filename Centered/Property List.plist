@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   Property List.plist
+   Centered
+
+   Created by Family Galvez on 8/31/25.
+   Copyright (c) 2025 ___ORGANIZATIONNAME___. All rights reserved.
+-->
+<plist version="1.0">
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.centered.app.auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>centered</string>
+				<string>com.centered.app</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
