@@ -386,7 +386,7 @@ struct ContentView: View {
                                         .id("journalTextStart") // Identifier for scrolling to top
                                     
                                     // AI Response
-                                    Text(currentAIResponse)
+                                    Text((try? AttributedString(markdown: currentAIResponse, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace))) ?? AttributedString(currentAIResponse))
                                         .font(.system(size: 15))
                                         .foregroundColor(Color(hex: "772C2C")) // Maroon #772C2C
                                         .multilineTextAlignment(.leading)
@@ -700,7 +700,7 @@ struct ContentView: View {
                                             .id("openJournalTextStart") // Identifier for scrolling to top
                                         
                                         // AI Response
-                                        Text(isFollowUpQuestionDay ? followUpCurrentAIResponse : openCurrentAIResponse)
+                                        Text((try? AttributedString(markdown: (isFollowUpQuestionDay ? followUpCurrentAIResponse : openCurrentAIResponse), options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace))) ?? AttributedString(isFollowUpQuestionDay ? followUpCurrentAIResponse : openCurrentAIResponse))
                                             .font(.system(size: 15))
                                             .foregroundColor(Color(hex: "772C2C")) // Maroon #772C2C
                                             .multilineTextAlignment(.leading)
@@ -3600,7 +3600,7 @@ Important: Keep reasoning minimal and respond directly.
                 // Analyzer Section
                 Text("Analyzer")
                     .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(Color(hex: "8BECF8"))
+                    .foregroundColor(Color(hex: "B98FE8"))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -3631,7 +3631,7 @@ Important: Keep reasoning minimal and respond directly.
                 // Analysis Availability Section
                 Text("Analysis Availability")
                     .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(Color(hex: "8BECF8"))
+                    .foregroundColor(Color(hex: "B98FE8"))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 8)
@@ -3651,7 +3651,7 @@ Important: Keep reasoning minimal and respond directly.
                 // Analysis Entry Minimums Section
                 Text("Analysis Entry Minimums")
                     .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(Color(hex: "8BECF8"))
+                    .foregroundColor(Color(hex: "B98FE8"))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 8)
