@@ -2511,7 +2511,7 @@ Important: Keep reasoning minimal and respond directly.
             .padding(.horizontal, 24)
             .frame(maxWidth: .infinity)
         }
-        .background(Color(hex: "772C2C"))
+        .background(Color(hex: "5E1C1C"))
         .ignoresSafeArea(.all, edges: .top)
         .onAppear {
             Task {
@@ -2635,7 +2635,7 @@ Important: Keep reasoning minimal and respond directly.
         VStack(alignment: .leading, spacing: 6) {
             Text("Mood Tracker")
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(Color(hex: "8BECF8"))
+                .foregroundColor(Color(hex: "A176D2"))
                 .frame(maxWidth: .infinity, alignment: .center)
             
             if analyzerViewModel.moodCounts.isEmpty {
@@ -2820,7 +2820,7 @@ Important: Keep reasoning minimal and respond directly.
         VStack(spacing: 6) {
             Text("Statistics")
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(Color(hex: "8BECF8"))
+                .foregroundColor(Color(hex: "A176D2"))
                 .frame(maxWidth: .infinity, alignment: .center)
             
             GeometryReader { geo in
@@ -2961,7 +2961,7 @@ Important: Keep reasoning minimal and respond directly.
         VStack(alignment: .leading, spacing: 6) {
             Text("Summary")
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(Color(hex: "8BECF8"))
+                .foregroundColor(Color(hex: "A176D2"))
                 .frame(maxWidth: .infinity, alignment: .center)
             
             if let summaryText = analyzerViewModel.summaryText, !summaryText.isEmpty {
@@ -3698,7 +3698,7 @@ Important: Keep reasoning minimal and respond directly.
 
 // Color Extensions
 extension Color {
-    static let textBlue = Color(hex: "#3F5E82")
+    static let textBlue = Color(hex: "#772C2C")
     static let backgroundBeige = Color(hex: "#E3E0C9")
     static let textFieldBackground = Color(hex: "#F5F4EB")
     static let textGrey = Color(hex: "#545555")
