@@ -380,7 +380,7 @@ struct SettingsView: View {
                     // Daily Notification Reminder section - directly below Notification
                     VStack(spacing: 4) {
                         HStack {
-                            Text("Daily Journal Reminder")
+                            Text("Daily Check-in Reminder")
                                 .font(.system(size: 16))
                                 .foregroundColor(Color(hex: "772C2C"))
                             
@@ -512,7 +512,7 @@ struct SettingsView: View {
                     // Weekly Journal Reminder section - 20pt below Daily Journal Reminder Options
                     VStack(spacing: 4) {
                         HStack {
-                            Text("Weekly Journal Reminder")
+                            Text("Weekly Check-in Reminder")
                                 .font(.system(size: 16))
                                 .foregroundColor(Color(hex: "772C2C"))
                             

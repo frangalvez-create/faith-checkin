@@ -2371,8 +2371,8 @@ class JournalViewModel: ObservableObject {
             
             if !eligibility.isEligible {
                 let message = analysisType == "monthly"
-                    ? "Sorry, a minimum of \"nine days\" of journal entries is needed to run the monthly analysis."
-                    : "Sorry, a minimum of \"two days\" of journal entries is needed to run the weekly analysis. Try again next week"
+                    ? "Sorry, a minimum of \"nine days\" of check-in entries is needed to run the monthly analysis."
+                    : "Sorry, a minimum of \"two days\" of check-in entries is needed to run the weekly analysis. Try again next week"
                 print("❌ createAnalyzerEntry: Insufficient entries - throwing error: \(message)")
                 // Don't set generic error message for minimum entries error - let ContentView handle it
                 isLoading = false

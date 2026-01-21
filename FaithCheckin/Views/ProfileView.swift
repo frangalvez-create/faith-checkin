@@ -27,7 +27,7 @@ struct ProfileView: View {
             
             // Interactive Menu Sections
             VStack(spacing: 0) {
-                // What is Centered Self Section
+                // What is Faith Check-in Section
                 Button(action: {
                     openCenteredSelf?()
                 }) {
@@ -38,7 +38,7 @@ struct ProfileView: View {
                             .frame(width: 26, height: 26)
                             .padding(.leading, 10) // 10pt from left edge
                         
-                        Text("What is Centered Self?")
+                        Text("What is Faith Check-in?")
                             .font(.system(size: 16))
                             .foregroundColor(Color(hex: "772C2C"))
                             .padding(.leading, 10) // 10pt to the right of icon

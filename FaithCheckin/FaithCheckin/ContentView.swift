@@ -276,7 +276,7 @@ struct ContentView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 0) {
-            // Date and Log Streak - positioned at top, scrolls with content
+            // Date and Streak - positioned at top, scrolls with content
             HStack {
                 Text(formatCurrentDate())
                     .font(.system(size: 14))
@@ -286,7 +286,7 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                Text("Log Streak: \(journalViewModel.calculateEntryStreak())")
+                Text("Streak: \(journalViewModel.calculateEntryStreak())")
                     .font(.system(size: 14))
                     .foregroundColor(Color(hex: "545555").opacity(1.0))
                     .padding(.top, 45)
@@ -995,7 +995,7 @@ struct ContentView: View {
                         
                         // Custom placeholder text with smaller font
                         if goalText.isEmpty {
-                            Text("ex. Less critical, more ambitious, more empathetic")
+                            Text("ex. More patient, more kind, less boastful")
                                 .font(.system(size: 12))
                                 .foregroundColor(Color(hex: "545555").opacity(0.6))
                                 .multilineTextAlignment(.center)
@@ -1089,7 +1089,7 @@ struct ContentView: View {
                                 .padding(.top, 10)
                         }
                         .padding(20)
-                        .background(Color(hex: "345377"))
+                        .background(Color(hex: "772C2C"))
                         .cornerRadius(10)
                     }
                 }
@@ -1490,7 +1490,7 @@ Produce a concise, information-dense summary in three short paragraphs.
 
 Paragraph 1: empathetically acknowledge the client's focus/concern and provide a factual explanation relevant to the input.
 
-Paragraph 2: cite a related passage in the bible and explain its relation and concept.
+Paragraph 2: cite a related passage in the bible and explain its relation and concept. Format the entire bible passage (both the reference and the verse text) in bold using markdown format **like this**. For example: **"John 3:16 - For God so loved the world that he gave his one and only Son..."**
 
 Paragraph 3: provide one positive achievable action aligned with christian values and the goal to be {goal}.
 
@@ -2551,7 +2551,7 @@ Important: Keep reasoning minimal and respond directly.
                     .padding(20)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color(hex: "345377"))
+                            .fill(Color(hex: "772C2C"))
                     )
                 }
                 .allowsHitTesting(true) // Block all interactions
@@ -2635,7 +2635,7 @@ Important: Keep reasoning minimal and respond directly.
         VStack(alignment: .leading, spacing: 6) {
             Text("Mood Tracker")
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(Color(hex: "A176D2"))
+                .foregroundColor(Color(hex: "B98FE8"))
                 .frame(maxWidth: .infinity, alignment: .center)
             
             if analyzerViewModel.moodCounts.isEmpty {
@@ -2820,7 +2820,7 @@ Important: Keep reasoning minimal and respond directly.
         VStack(spacing: 6) {
             Text("Statistics")
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(Color(hex: "A176D2"))
+                .foregroundColor(Color(hex: "B98FE8"))
                 .frame(maxWidth: .infinity, alignment: .center)
             
             GeometryReader { geo in
@@ -2832,9 +2832,9 @@ Important: Keep reasoning minimal and respond directly.
                 
                 // Fixed-size ZStack with exact positioning
                 ZStack {
-                    // # Logs - Top Left (y = 0)
+                    // # Check-ins - Top Left (y = 0)
                     VStack(spacing: 8) {
-                        Text("# Logs")
+                        Text("# Check-ins")
                             .font(.system(size: 15))
                             .foregroundColor(Color(hex: "545555"))
                             .lineLimit(1)
@@ -2853,7 +2853,7 @@ Important: Keep reasoning minimal and respond directly.
                     )
                     .position(x: columnWidth / 2, y: topRowHeight / 2)
                     
-                    // Log Streak - Top Middle (y = 0)
+                    // Check-in Streak - Top Middle (y = 0)
                     VStack(spacing: 8) {
                         Text("Streak")
                             .font(.system(size: 15))
@@ -2898,9 +2898,9 @@ Important: Keep reasoning minimal and respond directly.
                     )
                     .position(x: (columnWidth + spacing) * 2 + columnWidth / 2, y: centeredScoreHeight / 2)
                     
-                    // Fav Log Time - Bottom Left/Middle (starts at y = 86pt, ends at y = 156pt)
+                    // Fav Check-in Time - Bottom Left/Middle (starts at y = 86pt, ends at y = 156pt)
                     VStack(spacing: 8) {
-                        Text("Fav Log Time")
+                        Text("Fav Check-in Time")
                             .font(.system(size: 15))
                             .foregroundColor(Color(hex: "545555"))
                             .lineLimit(1)
@@ -2961,7 +2961,7 @@ Important: Keep reasoning minimal and respond directly.
         VStack(alignment: .leading, spacing: 6) {
             Text("Summary")
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(Color(hex: "A176D2"))
+                .foregroundColor(Color(hex: "B98FE8"))
                 .frame(maxWidth: .infinity, alignment: .center)
             
             if let summaryText = analyzerViewModel.summaryText, !summaryText.isEmpty {
@@ -3669,7 +3669,7 @@ Important: Keep reasoning minimal and respond directly.
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(16)
-            .background(Color(hex: "274262"))
+            .background(Color(hex: "772C2C"))
             .cornerRadius(16)
             .shadow(radius: 10)
             .padding(.horizontal, 20)
