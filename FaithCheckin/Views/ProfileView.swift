@@ -210,7 +210,7 @@ struct ProfileView: View {
             .padding(.bottom, 40) // 40pt from bottom
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(hex: "E3E0C9"))
+        .background(Color(hex: "E4DCC9"))
         .ignoresSafeArea(.all)
         .sheet(isPresented: $showingSettings) {
             SettingsView()

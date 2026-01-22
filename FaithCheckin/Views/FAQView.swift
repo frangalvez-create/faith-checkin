@@ -5,7 +5,7 @@ struct FAQView: View {
     
     var body: some View {
         ZStack {
-            Color(hex: "E3E0C9")
+            Color(hex: "E4DCC9")
                 .ignoresSafeArea(.all)
             
             NavigationView {
@@ -172,13 +172,13 @@ struct FAQView: View {
                         }
                         .frame(maxWidth: .infinity) // Expand to full width
                         .padding(.horizontal, 0) // Remove horizontal padding
-                        .background(Color(hex: "E3E0C9")) // Background for main content
+                        .background(Color(hex: "E4DCC9")) // Background for main content
                     }
                     .frame(maxWidth: .infinity) // Expand main VStack to full width
                     .padding(.horizontal, 0) // Remove horizontal padding from main VStack
                 }
                 .frame(maxWidth: .infinity) // Expand ScrollView to full width
-                .background(Color(hex: "E3E0C9")) // Background for ScrollView
+                .background(Color(hex: "E4DCC9")) // Background for ScrollView
                 .navigationBarHidden(true)
             }
             .frame(maxWidth: .infinity) // Expand NavigationView to full width

@@ -198,7 +198,7 @@ struct ContentView: View {
                     // Custom Tab Bar
                     customTabBar
                 }
-                .background(Color(hex: "E3E0C9"))
+                .background(Color(hex: "E4DCC9"))
                 .ignoresSafeArea(.all)
                 .overlay(
                     // Info Popup
@@ -256,7 +256,7 @@ struct ContentView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(hex: "E3E0C9"))
+        .background(Color(hex: "E4DCC9"))
         .ignoresSafeArea(.all)
         .allowsHitTesting(true) // Block all interactions
         .onAppear {
@@ -2627,7 +2627,7 @@ Important: Keep reasoning minimal and respond directly.
                 Spacer(minLength: 100)
             }
         }
-        .background(Color(hex: "E3E0C9"))
+        .background(Color(hex: "E4DCC9"))
         .ignoresSafeArea(.all, edges: .top)
     }
     
@@ -3193,7 +3193,7 @@ Important: Keep reasoning minimal and respond directly.
                     List {
                         ForEach(journalViewModel.favoriteJournalEntries) { entry in
                             favoriteEntryView(entry: entry)
-                                .listRowBackground(Color(hex: "E3E0C9"))
+                                .listRowBackground(Color(hex: "E4DCC9"))
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: 7.5, leading: 8, bottom: 7.5, trailing: 8))
                         }
@@ -3208,7 +3208,7 @@ Important: Keep reasoning minimal and respond directly.
                     .scrollContentBackground(.hidden)
                 }
             }
-            .background(Color(hex: "E3E0C9"))
+            .background(Color(hex: "E4DCC9"))
             
             // Edit Button positioned at top-right with functionality
             Button(action: {
@@ -3394,7 +3394,7 @@ Important: Keep reasoning minimal and respond directly.
         .padding(.horizontal, 20)
         .padding(.top, -5)
         .padding(.bottom, 22)
-        .background(Color(hex: "E3E0C9"))
+        .background(Color(hex: "E4DCC9"))
         .frame(height: 75) // Updated to 75pt height
     }
     
@@ -3482,7 +3482,7 @@ Important: Keep reasoning minimal and respond directly.
                 
             }
             .padding(16)
-            .background(Color(hex: "E3E0C9"))
+            .background(Color(hex: "E4DCC9"))
             .cornerRadius(16)
             .shadow(radius: 10)
             .padding(.horizontal, 20)
@@ -3542,7 +3542,7 @@ Important: Keep reasoning minimal and respond directly.
                 
             }
             .padding(16)
-            .background(Color(hex: "E3E0C9"))
+            .background(Color(hex: "E4DCC9"))
             .cornerRadius(16)
             .shadow(radius: 10)
             .padding(.horizontal, 20)
@@ -3579,7 +3579,7 @@ Important: Keep reasoning minimal and respond directly.
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(16)
-            .background(Color(hex: "E3E0C9"))
+            .background(Color(hex: "E4DCC9"))
             .cornerRadius(16)
             .shadow(radius: 10)
             .padding(.horizontal, 20)
@@ -3699,7 +3699,7 @@ Important: Keep reasoning minimal and respond directly.
 // Color Extensions
 extension Color {
     static let textBlue = Color(hex: "#772C2C")
-    static let backgroundBeige = Color(hex: "#E3E0C9")
+    static let backgroundBeige = Color(hex: "#E4DCC9")
     static let textFieldBackground = Color(hex: "#F5F4EB")
     static let textGrey = Color(hex: "#545555")
     
