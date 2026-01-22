@@ -2597,7 +2597,7 @@ Important: Keep reasoning minimal and respond directly.
                     .padding(.bottom, 8) // Add bottom padding to create exact 2pt gap
                 
                 // First text chunk
-                Text("In today's fast-paced and uncertain world, it's easy to feel scattered as our minds swirl with complex emotions and thoughts. Staying grounded in faith, however, can help us navigate life's challenges. Our goal is to help people grow spiritually—living peacefully through their faith in God.")
+                Text("In today's fast-paced and secular world, it's easy to feel scattered as our minds swirl with complex emotions and thoughts. Staying grounded in faith, however, can help us navigate life's challenges. Our goal is to help people grow spiritually—living peacefully through their faith in God.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "772C2C"))
                     .multilineTextAlignment(.center)
@@ -2605,7 +2605,7 @@ Important: Keep reasoning minimal and respond directly.
                     .padding(.top, 15) // Added 15pt top padding
                 
                 // Second text chunk
-                Text("**Daily Check-in** - Keeping a daily check-in is a simple yet powerful way to grow in faith. Check-ins have proven to help clear your mind, build spiritual awareness, find peace through prayer, manage emotions through faith, celebrate spiritual progress, and set meaningful faith-based goals.")
+                Text("**Daily Check-in** - Keeping a daily check-in is a simple yet powerful way to maintain and grow in faith. Check-ins can help clear your mind, build spiritual awareness, find peace through prayer, manage emotions through faith, celebrate spiritual progress, and set meaningful faith-based goals.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "772C2C"))
                     .multilineTextAlignment(.center)
@@ -2615,7 +2615,7 @@ Important: Keep reasoning minimal and respond directly.
                 
                 // Fourth text chunk with overlay icon
                 ZStack {
-                    Text("**Faith Insights** - Our app elevates your check-in experience with personalized, AI-powered guidance that is supportive, inspiring, and faith-oriented. After each check-in entry, tap the \"Insights\" button to unlock tailored faith-based insights. You can further customize the insights by setting a spiritual goal and providing your personal information (occupation, age, gender etc) in the user settings page.")
+                    Text("**Faith-Centered Insights** - Our app elevates your check-in experience with personalized, customized guidance that is supportive, inspiring, and faith-oriented. After each check-in entry, tap the \"Insights\" button to unlock tailored faith-based insights. You can further customize the insights by setting a spiritual goal and providing your personal information (occupation, age, gender etc) in the user settings page.")
                         .font(.system(size: 15))
                         .foregroundColor(Color(hex: "772C2C"))
                         .multilineTextAlignment(.center)
@@ -3443,11 +3443,11 @@ Important: Keep reasoning minimal and respond directly.
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
-                Text("• Periodically, check in questions will ask about previous journal entries.")
+                Text("• Periodically, check in questions will ask about previous check in entries.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
-                Text("• After completing your entry, you can tap the \"Insight\" button to receive customized insights.")
+                Text("• After completing your entry, you can tap the \"Insight\" button to receive spiritual insights.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
@@ -3463,11 +3463,11 @@ Important: Keep reasoning minimal and respond directly.
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(Color(hex: "545555"))
                 
-                Text("The more detail you share, the more helpful and accurate the AI insights will be.")
+                Text("The more detail you share, the more helpful and accurate the insights will be.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
-                Text("If you add your information (gender, occupation and birthdate) in the User Settings page (Here), the AI Insight will include this in its analysis and insights")
+                Text("If you add your information (gender, occupation and birthdate) in the User Settings page (Here), the insight will include this in its analysis and recommendation")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                     .onTapGesture {
@@ -3508,11 +3508,11 @@ Important: Keep reasoning minimal and respond directly.
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
-                Text("• These questions are designed to help you reflect on specific aspects of your life and well-being.")
+                Text("• These questions are designed to help you reflect on specific aspects of your spiritual life and well-being.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
-                Text("• After completing your entry, you have an option to tap the \"Insight\" button to receive customized AI insights.")
+                Text("• After completing your entry, you have an option to tap the \"Insight\" button to receive customized, intelligent insights.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
@@ -3524,11 +3524,11 @@ Important: Keep reasoning minimal and respond directly.
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(Color(hex: "545555"))
                 
-                Text("The more detail you share, the more helpful and accurate the AI insights will be.")
+                Text("The more detail you share, the more helpful and accurate the insights will be.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
-                Text("If yesterday's question/entry still appear, you can refresh by swiping down.")
+                Text("If yesterday's question/entry still appears, you can refresh by swiping down.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                 
@@ -3566,7 +3566,7 @@ Important: Keep reasoning minimal and respond directly.
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("You can enter a personal goal in this field (e.g. 'less worried' or 'more patient'), and the AI will tailor its insights around it.")
+                Text("You can enter a personal goal in this field (e.g. 'more patient, more kind'), and the insights will be tailored around it.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "545555"))
                     .multilineTextAlignment(.leading)
@@ -3610,19 +3610,19 @@ Important: Keep reasoning minimal and respond directly.
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("• Calculates log entry statistics")
+                Text("• Calculates check-in entry statistics")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("• Generates a Faith Score - how mentally centered you are based on your log entries (0-100)")
+                Text("• Generates a Faith Score - how spiritually centered you are based on your entries (0-100)")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("• Summarizes your week/month and provides actions and goals.")
+                Text("• Summarizes your week/month and provides spiritual actions and goals.")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
@@ -3649,20 +3649,20 @@ Important: Keep reasoning minimal and respond directly.
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 // Analysis Entry Minimums Section
-                Text("Analysis Entry Minimums")
+                Text("Analysis Check-in Minimums")
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(Color(hex: "B98FE8"))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 8)
                 
-                Text("• Weekly Analysis: 2 days of log entries / week")
+                Text("• Weekly Analysis: 2 days of check-ins / week")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("• Monthly Analysis: 9 days of log entries / month")
+                Text("• Monthly Analysis: 9 days of check-ins / month")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)

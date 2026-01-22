@@ -28,14 +28,14 @@ struct FAQView: View {
                         VStack(spacing: 20) {
                             // Question 1
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("What is CenteredSelf?")
+                                Text("What is Faith Check-in?")
                                     .font(.system(size: 18, weight: .bold))
                                     .foregroundColor(Color(hex: "772C2C"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.leading, 10) // 10pt left padding
                                     .padding(.top, 50) // 50pt below FAQ title
                                 
-                                Text("CenteredSelf is a journaling and self-reflection app designed to help you explore your thoughts and experiences, build self-awareness, ease stress, manage emotions, celebrate progress and set meaningful goals through guided prompts and AI-powered insights.")
+                                Text("Faith Check-in is a spiritual self-reflection app designed to help you explore your daily thoughts and experiences, build spiritual-awareness, ease stress, manage emotions, celebrate progress and set meaningful spiritual goals through guided prompts and faith-centered insights.")
                                     .font(.system(size: 14))
                                     .foregroundColor(Color(hex: "545555"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,14 +46,14 @@ struct FAQView: View {
                             
                             // Question 2 - How often can I enter journals?
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("How often can I enter journals?")
+                                Text("How often can I enter check-ins?")
                                     .font(.system(size: 18, weight: .bold))
                                     .foregroundColor(Color(hex: "772C2C"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.leading, 10) // 10pt left padding
                                     .padding(.top, 20) // 20pt below previous answer
                                 
-                                Text("You can add one journal entry per day in the guided question section and/or write freely in the lower section. After submitting, you'll have the option to receive AI insights by clicking the Insights button. Journal entries refresh overnight, and new opportunities to journal become available the next day.")
+                                Text("You can add one check-in entry per day in the guided question section and/or write freely in the lower section. After submitting, you'll have the option to receive customized spiritual insights by clicking the Insights button. Questions refresh overnight, and new opportunities to check-in become available the next day.")
                                     .font(.system(size: 14))
                                     .foregroundColor(Color(hex: "545555"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -64,14 +64,14 @@ struct FAQView: View {
                             
                             // Question 3 - How do I refresh the journal entries everyday?
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("How do I refresh the journal entries everyday?")
+                                Text("How do I refresh the check-ins everyday?")
                                     .font(.system(size: 18, weight: .bold))
                                     .foregroundColor(Color(hex: "772C2C"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.leading, 10) // 10pt left padding
                                     .padding(.top, 20) // 20pt below previous answer
                                 
-                                Text("Journal entries refresh overnight, and new opportunities open each day. If yesterday's entry still appears in the morning, just swipe down on your screen to clear it.")
+                                Text("Check-ins refresh overnight, and new opportunities open each day. If yesterday's entry still appears in the morning, just swipe down on your screen to clear it.")
                                     .font(.system(size: 14))
                                     .foregroundColor(Color(hex: "545555"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -89,7 +89,7 @@ struct FAQView: View {
                                     .padding(.leading, 10) // 10pt left padding
                                     .padding(.top, 20) // 20pt below previous answer
                                 
-                                Text("CenteredSelf uses OpenAI's language model to provide personalized journaling prompts, insights, and suggestions based on your entries. Your data is encrypted, processed and stored securely.")
+                                Text("Faith Check-in uses OpenAI's language model to provide personalized prompts, insights, and suggestions based on your entries. Your data is encrypted, processed and stored securely.")
                                     .font(.system(size: 14))
                                     .foregroundColor(Color(hex: "545555"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -107,7 +107,7 @@ struct FAQView: View {
                                     .padding(.leading, 10) // 10pt left padding
                                     .padding(.top, 20) // 20pt below previous answer
                                 
-                                Text("Yes, we take your privacy seriously. Your journal entries are stored securely and are only accessible to you. We use industry-standard security measures to protect your data.")
+                                Text("Yes, we take your privacy seriously. Your check-in entries are stored securely and are only accessible to you. We use industry-standard security measures to protect your data.")
                                     .font(.system(size: 14))
                                     .foregroundColor(Color(hex: "545555"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -125,7 +125,7 @@ struct FAQView: View {
                                     .padding(.leading, 10) // 10pt left padding
                                     .padding(.top, 20) // 20pt below previous answer
                                 
-                                Text("Simply create an account, verify your email, authenticate your One Time Passcode (OTP) and start journaling! You can choose from guided questions or write freely about anything on your mind. The AI will provide helpful insight and actions as you go.")
+                                Text("Simply create an account, verify your email, authenticate your One Time Passcode (OTP) and start right away! You can choose from guided questions or write freely about anything on your mind. The customized insights will analyze and provide spiritual actions as you go.")
                                     .font(.system(size: 14))
                                     .foregroundColor(Color(hex: "545555"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
