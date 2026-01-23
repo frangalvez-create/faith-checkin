@@ -3689,79 +3689,6 @@ Important: Keep reasoning minimal and respond directly.
         }
     }
     
-    // MARK: - Loading Text Helper Function
-    private func getLoadingText() -> String {
-        if isLoadingGenerating || openIsLoadingGenerating {
-            // Check retry attempt status
-            switch journalViewModel.currentRetryAttempt {
-            case 1:
-                return "Generating..."
-            case 2:
-                return "Retrying..."
-            case 3:
-                return "Retrying again..."
-            default:
-                return "Generating..."
-            }
-        } else {
-            return "Saving..."
-        }
-    }
-}
-
-// Color Extensions
-extension Color {
-    static let textBlue = Color(hex: "#772C2C")
-    static let backgroundBeige = Color(hex: "#E4DCC9")
-    static let textFieldBackground = Color(hex: "#F5F4EB")
-    static let textGrey = Color(hex: "#545555")
-    
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        case 3: // RGB (12-bit)
-            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: // RGB (24-bit)
-            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        case 8: // ARGB (32-bit)
-            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
-        default:
-            (a, r, g, b) = (1, 1, 1, 0)
-        }
-
-        self.init(
-            .sRGB,
-            red: Double(r) / 255,
-            green: Double(g) / 255,
-            blue:  Double(b) / 255,
-            opacity: Double(a) / 255
-        )
-    }
-}
-
-// MARK: - Timeout Helper Function
-    func withTimeout<T>(seconds: TimeInterval, operation: @escaping () async throws -> T) async throws -> T {
-    return try await withThrowingTaskGroup(of: T.self) { group in
-        group.addTask {
-            return try await operation()
-        }
-        
-        group.addTask {
-            try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
-            throw TimeoutError()
-        }
-        
-        guard let result = try await group.next() else {
-            throw TimeoutError()
-        }
-        
-        group.cancelAll()
-        return result
-    }
-    
     // MARK: - Notification Scheduling Maintenance
     
     // Maintain notification scheduling (called on app launch)
@@ -3910,6 +3837,79 @@ extension Color {
             // Schedule notification
             scheduleNotification(hour: hour, minute: minute, identifier: dateSpecificIdentifier, date: targetDate, questionText: questionText)
         }
+    }
+    
+    // MARK: - Loading Text Helper Function
+    private func getLoadingText() -> String {
+        if isLoadingGenerating || openIsLoadingGenerating {
+            // Check retry attempt status
+            switch journalViewModel.currentRetryAttempt {
+            case 1:
+                return "Generating..."
+            case 2:
+                return "Retrying..."
+            case 3:
+                return "Retrying again..."
+            default:
+                return "Generating..."
+            }
+        } else {
+            return "Saving..."
+        }
+    }
+}
+
+// Color Extensions
+extension Color {
+    static let textBlue = Color(hex: "#772C2C")
+    static let backgroundBeige = Color(hex: "#E4DCC9")
+    static let textFieldBackground = Color(hex: "#F5F4EB")
+    static let textGrey = Color(hex: "#545555")
+    
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (1, 1, 1, 0)
+        }
+
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue:  Double(b) / 255,
+            opacity: Double(a) / 255
+        )
+    }
+}
+
+// MARK: - Timeout Helper Function
+    func withTimeout<T>(seconds: TimeInterval, operation: @escaping () async throws -> T) async throws -> T {
+    return try await withThrowingTaskGroup(of: T.self) { group in
+        group.addTask {
+            return try await operation()
+        }
+        
+        group.addTask {
+            try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+            throw TimeoutError()
+        }
+        
+        guard let result = try await group.next() else {
+            throw TimeoutError()
+        }
+        
+        group.cancelAll()
+        return result
     }
 }
 
