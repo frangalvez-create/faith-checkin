@@ -509,7 +509,7 @@ struct SettingsView: View {
                     }
                     .padding(.top, 15) // 15pt below Daily Notification Reminder text
                     
-                    // Weekly Journal Reminder section - 20pt below Daily Journal Reminder Options
+                    // Weekly Check-in Reminder section - 20pt below Daily Check-in Reminder Options
                     VStack(spacing: 4) {
                         HStack {
                             Text("Weekly Check-in Reminder")
@@ -521,9 +521,9 @@ struct SettingsView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 40) // Overall horizontal padding
                     }
-                    .padding(.top, 20) // 20pt below Daily Journal Reminder Options
+                    .padding(.top, 20) // 20pt below Daily Check-in Reminder Options
                     
-                    // Weekly Journal Reminder Option
+                    // Weekly Check-in Reminder Option
                     VStack(spacing: 10) {
                         // Sunday 8:00 PM - End of Week
                         HStack {
@@ -544,9 +544,9 @@ struct SettingsView: View {
                                 .padding(.trailing, 30)
                         }
                     }
-                    .padding(.top, 15) // 15pt below Weekly Journal Reminder text
+                    .padding(.top, 15) // 15pt below Weekly Check-in Reminder text
                     
-                    // AI Enhancement Note - 25pt below Weekly Journal Reminder section
+                    // AI Enhancement Note - 25pt below Weekly Check-in Reminder section
                     Text("* these elements will be used to further enhance the AI insights response")
                         .font(.system(size: 12))
                         .foregroundColor(Color(hex: "545555"))
@@ -921,17 +921,17 @@ struct SettingsView: View {
         // Set different titles and bodies based on time
         switch (hour, minute) {
         case (7, 0), (9, 30):
-            content.title = "Morning Journal Reminder"
-            content.body = "Quick journal session to start your day?"
+            content.title = "Morning Check-in Reminder"
+            content.body = "Quick check-in to start your day?"
         case (12, 0), (15, 0):
-            content.title = "Daily Journal Reminder"
-            content.body = "Ready to journal?"
+            content.title = "Daily Check-in Reminder"
+            content.body = "Ready to check in?"
         case (18, 0), (21, 30):
-            content.title = "Evening Journal Reminder"
+            content.title = "Evening Check-in Reminder"
             content.body = "How did your day go?"
         default:
-            content.title = "Daily Journal Reminder"
-            content.body = "Have you journaled today?"
+            content.title = "Daily Check-in Reminder"
+            content.body = "Have you checked in today?"
         }
         
         content.sound = .default
@@ -1001,8 +1001,8 @@ struct SettingsView: View {
         requestNotificationAuthorization()
         
         let content = UNMutableNotificationContent()
-        content.title = "End of Week Journal Reminder"
-        content.body = "Did you analyze and journal your week yet?"
+        content.title = "End of Week Check-in Reminder"
+        content.body = "Did you analyze and check in your week yet?"
         content.sound = .default
         
         var dateComponents = DateComponents()
