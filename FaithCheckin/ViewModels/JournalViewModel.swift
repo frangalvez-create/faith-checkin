@@ -462,8 +462,8 @@ class JournalViewModel: ObservableObject {
             
             // Generate AI response using OpenAI with retry logic
             // Use "journal" analysisType to avoid adding analyzer system message
-            // Use gpt-5 with 2000 tokens and low reasoning effort
-            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5", analysisType: "journal")
+            // Use gpt-5-mini (no reasoning tokens) with 2000 tokens for journal entries
+            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5-mini", analysisType: "journal")
             
             print("✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅")
             print("✅ AI RESPONSE SUCCESS - Length: \(aiResponse.count) characters")
@@ -508,10 +508,10 @@ class JournalViewModel: ObservableObject {
     /// Generates AI response with retry logic (up to 3 attempts with exponential backoff)
     /// - Parameters:
     ///   - prompt: The prompt to send to the AI
-    ///   - model: The model to use (default: "gpt-5" for journal entries, "gpt-5" for analyzer)
+    ///   - model: The model to use (default: "gpt-5-mini" for journal entries, "gpt-5" for analyzer)
     ///   - analysisType: The type of analysis ("weekly" or "monthly") - only used for analyzer
     ///   - maxRetries: Maximum number of retry attempts
-    private func generateAIResponseWithRetry(for prompt: String, model: String = "gpt-5", analysisType: String = "weekly", maxRetries: Int = 3) async throws -> String {
+    private func generateAIResponseWithRetry(for prompt: String, model: String = "gpt-5-mini", analysisType: String = "weekly", maxRetries: Int = 3) async throws -> String {
         var lastError: Error?
         
         for attempt in 1...maxRetries {
@@ -532,7 +532,7 @@ class JournalViewModel: ObservableObject {
                     }
                 }
                 
-                // Use specified model (gpt-5 for both journal entries and analyzer)
+                // Use specified model (gpt-5-mini for journal entries, gpt-5 for analyzer)
                 print("🔄🔄🔄 CALLING OpenAI API - Model: \(model), AnalysisType: \(analysisType)")
                 let response = try await openAIService.generateAIResponse(for: prompt, model: model, analysisType: analysisType)
                 print("🔄🔄🔄 OpenAI API RESPONSE RECEIVED - Length: \(response.count) characters")
@@ -768,8 +768,8 @@ class JournalViewModel: ObservableObject {
             
             // Generate AI response using OpenAI with retry logic
             // Use "journal" analysisType to avoid adding analyzer system message
-            // Use gpt-5 with 2000 tokens and low reasoning effort
-            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5", analysisType: "journal")
+            // Use gpt-5-mini (no reasoning tokens) with 2000 tokens for journal entries
+            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5-mini", analysisType: "journal")
             
             // Create updated entry with AI response
             let tagsArray: [String] = Array(mostRecentEntry.tags)
@@ -1482,7 +1482,8 @@ class JournalViewModel: ObservableObject {
             
             // Generate the follow-up question using OpenAI with retry logic (2s, 4s delays)
             // Use "journal" analysisType to avoid adding analyzer system message
-            let fuqAiResponse = try await generateAIResponseWithRetry(for: fuqAiPrompt, model: "gpt-5", analysisType: "journal")
+            // Use gpt-5-mini (no reasoning tokens) for follow-up questions
+            let fuqAiResponse = try await generateAIResponseWithRetry(for: fuqAiPrompt, model: "gpt-5-mini", analysisType: "journal")
             
             // Create follow-up generation entry (saves to follow_up_generation table)
             let followUpGeneration = FollowUpGeneration(
@@ -1944,7 +1945,8 @@ class JournalViewModel: ObservableObject {
             
             // Generate the follow-up question using OpenAI with retry logic (2s, 4s delays)
             // Use "journal" analysisType to avoid adding analyzer system message
-            let fuqAiResponse = try await generateAIResponseWithRetry(for: fuqAiPrompt, model: "gpt-5", analysisType: "journal")
+            // Use gpt-5-mini (no reasoning tokens) for follow-up questions
+            let fuqAiResponse = try await generateAIResponseWithRetry(for: fuqAiPrompt, model: "gpt-5-mini", analysisType: "journal")
             
             // Create the follow-up question entry
             let _ = try await supabaseService.createFollowUpQuestionEntry(
@@ -2118,8 +2120,8 @@ class JournalViewModel: ObservableObject {
             
             // Generate AI response using OpenAI with retry logic
             // Use "journal" analysisType to avoid adding analyzer system message
-            // Use gpt-5 with 2000 tokens and low reasoning effort
-            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5", analysisType: "journal")
+            // Use gpt-5-mini (no reasoning tokens) with 2000 tokens for journal entries
+            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5-mini", analysisType: "journal")
             
             // Create updated entry with AI response
             let tagsArray: [String] = Array(mostRecentEntry.tags)

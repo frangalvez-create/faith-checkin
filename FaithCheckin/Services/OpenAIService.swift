@@ -109,11 +109,19 @@ Do NOT exceed ~200 words in paragraph 2.
                 ]
             }
             
-            // Set max_output_tokens based on analysis type
-            // Analyzer calls use 2000, journal entries use 600
-            let maxTokens = analysisType == "journal" ? 600 : 2000
+            // Set max_output_tokens - increased to 2000 for all types to accommodate reasoning tokens
+            // Reasoning tokens count against the output limit, so we need more tokens for complete responses
+            // Previously journal entries used 600, but reasoning can consume 500-600 tokens, leaving little for response
+            let maxTokens = 2000
             body["max_output_tokens"] = maxTokens
-            body["reasoning"] = ["effort": "low"]
+            
+            // Only enable reasoning for analyzer calls (weekly/monthly) - disable for journal entries
+            // Journal entries are straightforward responses and don't need complex reasoning
+            // This saves ~500-600 tokens per journal entry response
+            if analysisType != "journal" {
+                body["reasoning"] = ["effort": "low"]
+            }
+            // For journal entries, omit reasoning parameter entirely to save tokens
             requestBody = body
         } else {
             // GPT-5-mini and other models use /v1/chat/completions endpoint with standard structure
@@ -134,12 +142,12 @@ Do NOT exceed ~200 words in paragraph 2.
                 "content": prompt
             ])
             
-            // Other models (legacy support) use /v1/chat/completions endpoint
-            // Note: All journal entries now use gpt-5, so this branch is for legacy models only
+            // Other models (gpt-5-mini) use /v1/chat/completions endpoint
+            // Note: Journal entries now use gpt-5-mini (no reasoning tokens), analyzer uses gpt-5
             requestBody = [
                 "model": model,
                 "messages": messages,
-                "max_completion_tokens": 300
+                "max_completion_tokens": 2000  // Increased from 300 to 2000 for journal entries
             ]
         }
         
