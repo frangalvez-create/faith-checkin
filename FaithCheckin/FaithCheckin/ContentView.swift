@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import UserNotifications
 
 // Helper view to safely load images that may not exist in asset catalog
 struct SafeImage: View {
@@ -116,6 +117,15 @@ struct ContentView: View {
     @StateObject private var analyzerViewModel = AnalyzerViewModel()
     @State private var showCenteredSelfSheet: Bool = false
     
+    // Notification State (for maintenance scheduling)
+    @AppStorage("morning_reminder_enabled") private var morningReminder: Bool = false
+    @AppStorage("work_am_break_reminder_enabled") private var workAMBreakReminder: Bool = false
+    @AppStorage("lunch_reminder_enabled") private var lunchReminder: Bool = false
+    @AppStorage("work_pm_break_reminder_enabled") private var workPMBreakReminder: Bool = false
+    @AppStorage("evening_reminder_enabled") private var eveningReminder: Bool = false
+    @AppStorage("before_bed_reminder_enabled") private var beforeBedReminder: Bool = false
+    @AppStorage("weekly_reminder_enabled") private var weeklyReminder: Bool = true
+    
     private let analyzerMoodColors: [Color] = [
         Color(hex: "583F82"),
         Color(hex: "3F8259"),
@@ -131,6 +141,9 @@ struct ContentView: View {
                 await journalViewModel.checkAuthenticationStatus()
                 // Ensure Journal tab is selected after authentication
                 selectedTab = 0
+                
+                // Maintain notification scheduling (3 days ahead with guided questions)
+                await maintainNotificationScheduling()
                 
                 // Don't load data here - wait for authentication to complete,
                 // then LoadingView will appear, then Journal view's onAppear will load data
@@ -3747,6 +3760,156 @@ extension Color {
         
         group.cancelAll()
         return result
+    }
+    
+    // MARK: - Notification Scheduling Maintenance
+    
+    // Maintain notification scheduling (called on app launch)
+    private func maintainNotificationScheduling() async {
+        // Check if we need to schedule more notifications for enabled reminders
+        // We want to maintain 3 days ahead for each enabled reminder
+        
+        if morningReminder {
+            await scheduleNotificationsForNextDays(baseIdentifier: "morning_reminder", hour: 7, minute: 0, daysAhead: 3)
+        }
+        if workAMBreakReminder {
+            await scheduleNotificationsForNextDays(baseIdentifier: "work_am_break_reminder", hour: 9, minute: 30, daysAhead: 3)
+        }
+        if lunchReminder {
+            await scheduleNotificationsForNextDays(baseIdentifier: "lunch_reminder", hour: 12, minute: 0, daysAhead: 3)
+        }
+        if workPMBreakReminder {
+            await scheduleNotificationsForNextDays(baseIdentifier: "work_pm_break_reminder", hour: 15, minute: 0, daysAhead: 3)
+        }
+        if eveningReminder {
+            await scheduleNotificationsForNextDays(baseIdentifier: "evening_reminder", hour: 18, minute: 0, daysAhead: 3)
+        }
+        if beforeBedReminder {
+            await scheduleNotificationsForNextDays(baseIdentifier: "before_bed_reminder", hour: 21, minute: 30, daysAhead: 3)
+        }
+    }
+    
+    // Get question for a specific date using the same logic as UI
+    private func getQuestionForDate(_ date: Date) async -> String {
+        do {
+            let questions = try await journalViewModel.supabaseService.fetchGuidedQuestions()
+            let sortedQuestions = questions.sorted { $0.orderIndex ?? 0 < $1.orderIndex ?? 0 }
+            
+            // Same reference date as UI (January 1, 2024)
+            let referenceDate = Calendar.current.date(from: DateComponents(year: 2024, month: 1, day: 1))!
+            let targetDay = Calendar.current.startOfDay(for: date)
+            let daysSinceReference = Calendar.current.dateComponents([.day], from: referenceDate, to: targetDay).day ?? 0
+            
+            // Same modulo calculation as UI
+            let questionIndex = daysSinceReference % sortedQuestions.count
+            return sortedQuestions[questionIndex].questionText
+        } catch {
+            // Fallback to static text if question fetch fails
+            return getFallbackBodyText(hour: 0, minute: 0)
+        }
+    }
+    
+    // Get fallback static body text (used when question fetch fails or app hasn't been opened in 3+ days)
+    private func getFallbackBodyText(hour: Int, minute: Int) -> String {
+        switch (hour, minute) {
+        case (7, 0), (9, 30):
+            return "Quick check-in to start your day?"
+        case (12, 0), (15, 0):
+            return "Ready to check in?"
+        case (18, 0), (21, 30):
+            return "How did your day go?"
+        default:
+            return "Have you checked in today?"
+        }
+    }
+    
+    // Schedule notification for a specific date with a question
+    private func scheduleNotification(hour: Int, minute: Int, identifier: String, date: Date, questionText: String) {
+        // Request permission first
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            // Handle authorization result
+        }
+        
+        let content = UNMutableNotificationContent()
+        
+        // Set different titles based on time
+        switch (hour, minute) {
+        case (7, 0), (9, 30):
+            content.title = "Morning Check-in Reminder"
+        case (12, 0), (15, 0):
+            content.title = "Daily Check-in Reminder"
+        case (18, 0), (21, 30):
+            content.title = "Evening Check-in Reminder"
+        default:
+            content.title = "Daily Check-in Reminder"
+        }
+        
+        // Use the guided question as the body
+        content.body = questionText
+        content.sound = .default
+        
+        // Create date components for the specific date
+        let calendar = Calendar.current
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        
+        // Schedule for specific date only (no repeats)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("❌ Failed to schedule notification \(identifier): \(error.localizedDescription)")
+            } else {
+                print("✅ Scheduled notification \(identifier) for \(date) with question: \(questionText.prefix(50))...")
+            }
+        }
+    }
+    
+    // Schedule notifications for the next N days
+    private func scheduleNotificationsForNextDays(baseIdentifier: String, hour: Int, minute: Int, daysAhead: Int) async {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        // Check what's already scheduled
+        let pendingRequests = await withCheckedContinuation { continuation in
+            UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                continuation.resume(returning: requests)
+            }
+        }
+        
+        let scheduledDates = Set(pendingRequests.compactMap { request -> Date? in
+            guard request.identifier.starts(with: baseIdentifier + "_") else { return nil }
+            if let trigger = request.trigger as? UNCalendarNotificationTrigger,
+               let date = calendar.date(from: trigger.dateComponents) {
+                return calendar.startOfDay(for: date)
+            }
+            return nil
+        })
+        
+        // Schedule for each day up to daysAhead
+        for dayOffset in 0..<daysAhead {
+            guard let targetDate = calendar.date(byAdding: .day, value: dayOffset, to: today) else { continue }
+            let targetDay = calendar.startOfDay(for: targetDate)
+            
+            // Skip if already scheduled
+            if scheduledDates.contains(targetDay) {
+                continue
+            }
+            
+            // Get question for this date
+            let questionText = await getQuestionForDate(targetDate)
+            
+            // Create date-specific identifier: "morning_reminder_2025_01_21"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy_MM_dd"
+            let dateString = dateFormatter.string(from: targetDate)
+            let dateSpecificIdentifier = "\(baseIdentifier)_\(dateString)"
+            
+            // Schedule notification
+            scheduleNotification(hour: hour, minute: minute, identifier: dateSpecificIdentifier, date: targetDate, questionText: questionText)
+        }
     }
 }
 
