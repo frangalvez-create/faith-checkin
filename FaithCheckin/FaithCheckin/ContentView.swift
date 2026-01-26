@@ -3279,12 +3279,23 @@ Important: Keep reasoning minimal and respond directly.
                     
                     // AI response text (only shown when expanded)
                     if isExpanded && !(entry.aiResponse?.isEmpty ?? true) {
-                        Text(entry.aiResponse ?? "")
-                            .font(.system(size: 16))
-                            .foregroundColor(Color(hex: "772C2C"))
-                            .multilineTextAlignment(.leading)
-                            .padding(.leading, 5) // 5pt indent
-                            .padding(.top, 4)
+                        if let aiResponse = entry.aiResponse,
+                           let attributedString = try? AttributedString(markdown: aiResponse, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)) {
+                            Text(attributedString)
+                                .font(.system(size: 16))
+                                .foregroundColor(Color(hex: "772C2C"))
+                                .multilineTextAlignment(.leading)
+                                .padding(.leading, 5) // 5pt indent
+                                .padding(.top, 4)
+                        } else {
+                            // Fallback to plain text if markdown parsing fails
+                            Text(entry.aiResponse ?? "")
+                                .font(.system(size: 16))
+                                .foregroundColor(Color(hex: "772C2C"))
+                                .multilineTextAlignment(.leading)
+                                .padding(.leading, 5) // 5pt indent
+                                .padding(.top, 4)
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -3610,8 +3621,8 @@ Important: Keep reasoning minimal and respond directly.
             
             // Popup content
             VStack(alignment: .leading, spacing: 8) {
-                // Analyzer Section
-                Text("Analyzer")
+                // Reflection Section
+                Text("Reflection")
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(Color(hex: "B98FE8"))
                     .multilineTextAlignment(.leading)
@@ -3641,41 +3652,41 @@ Important: Keep reasoning minimal and respond directly.
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                // Analysis Availability Section
-                Text("Analysis Availability")
+                // Reflection Availability Section
+                Text("Reflection Availability")
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(Color(hex: "B98FE8"))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 8)
                 
-                Text("• Weekly analysis available every Sunday morning")
+                Text("• Weekly reflection available every Sunday morning")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("• Monthly analysis available the Sunday after the month ends")
+                Text("• Monthly reflection available the Sunday after the month ends")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                // Analysis Entry Minimums Section
-                Text("Analysis Check-in Minimums")
+                // Reflection Entry Minimums Section
+                Text("Reflection Check-in Minimums")
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(Color(hex: "B98FE8"))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 8)
                 
-                Text("• Weekly Analysis: 2 days of check-ins / week")
+                Text("• Weekly Reflection: 2 days of check-ins / week")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("• Monthly Analysis: 9 days of check-ins / month")
+                Text("• Monthly Reflection: 9 days of check-ins / month")
                     .font(.system(size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
@@ -3691,11 +3702,46 @@ Important: Keep reasoning minimal and respond directly.
     
     // MARK: - Notification Scheduling Maintenance
     
-    // Maintain notification scheduling (called on app launch)
-    private func maintainNotificationScheduling() async {
-        // Check if we need to schedule more notifications for enabled reminders
-        // We want to maintain 3 days ahead for each enabled reminder
+    // Cancel all old static notifications (base identifiers without dates)
+    private func cancelOldStaticNotifications() async {
+        let baseIdentifiers = [
+            "morning_reminder",
+            "work_am_break_reminder",
+            "lunch_reminder",
+            "work_pm_break_reminder",
+            "evening_reminder",
+            "before_bed_reminder"
+        ]
         
+        let pendingRequests = await withCheckedContinuation { continuation in
+            UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                continuation.resume(returning: requests)
+            }
+        }
+        
+        // Find all old notifications (base identifiers without date suffix)
+        let oldNotificationIdentifiers = pendingRequests.compactMap { request -> String? in
+            // Check if it's a base identifier (doesn't contain date pattern)
+            for baseId in baseIdentifiers {
+                if request.identifier == baseId {
+                    return baseId
+                }
+            }
+            return nil
+        }
+        
+        if !oldNotificationIdentifiers.isEmpty {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: oldNotificationIdentifiers)
+            print("✅ Cancelled \(oldNotificationIdentifiers.count) old static notifications: \(oldNotificationIdentifiers)")
+        }
+    }
+    
+    // Clean up old static notifications and maintain new scheduling system
+    private func maintainNotificationScheduling() async {
+        // First, cancel all old static notifications with base identifiers
+        await cancelOldStaticNotifications()
+        
+        // Then, maintain 3-day schedule with guided questions for enabled reminders
         if morningReminder {
             await scheduleNotificationsForNextDays(baseIdentifier: "morning_reminder", hour: 7, minute: 0, daysAhead: 3)
         }

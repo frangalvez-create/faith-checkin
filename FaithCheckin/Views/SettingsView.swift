@@ -1056,14 +1056,46 @@ struct SettingsView: View {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
     }
     
+    // Cancel all old static notifications (base identifiers without dates)
+    private func cancelOldStaticNotifications() async {
+        let baseIdentifiers = [
+            "morning_reminder",
+            "work_am_break_reminder",
+            "lunch_reminder",
+            "work_pm_break_reminder",
+            "evening_reminder",
+            "before_bed_reminder"
+        ]
+        
+        let pendingRequests = await withCheckedContinuation { continuation in
+            UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                continuation.resume(returning: requests)
+            }
+        }
+        
+        // Find all old notifications (base identifiers without date suffix)
+        let oldNotificationIdentifiers = pendingRequests.compactMap { request -> String? in
+            // Check if it's a base identifier (doesn't contain date pattern)
+            for baseId in baseIdentifiers {
+                if request.identifier == baseId {
+                    return baseId
+                }
+            }
+            return nil
+        }
+        
+        if !oldNotificationIdentifiers.isEmpty {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: oldNotificationIdentifiers)
+            print("✅ SettingsView: Cancelled \(oldNotificationIdentifiers.count) old static notifications: \(oldNotificationIdentifiers)")
+        }
+    }
+    
     private func loadNotificationStates() {
         Task {
-            // Check what's already scheduled
-            let requests = await UNUserNotificationCenter.current().pendingNotificationRequests()
+            // First, cancel any old static notifications
+            await cancelOldStaticNotifications()
             
-            // Check if we need to schedule more notifications for enabled reminders
-            // We want to maintain 3 days ahead for each enabled reminder
-            
+            // Then maintain 3-day schedule with guided questions for enabled reminders
             if morningReminder {
                 await scheduleNotificationsForNextDays(baseIdentifier: "morning_reminder", hour: 7, minute: 0, daysAhead: 3)
             }
@@ -1084,6 +1116,11 @@ struct SettingsView: View {
             }
             
             // Weekly reminder: reschedule if it should be on but is missing
+            let requests = await withCheckedContinuation { continuation in
+                UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                    continuation.resume(returning: requests)
+                }
+            }
             let identifiers = requests.map { $0.identifier }
             if weeklyReminder && !identifiers.contains("weekly_reminder") {
                 scheduleWeeklyNotification()
