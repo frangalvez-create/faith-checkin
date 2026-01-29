@@ -603,7 +603,7 @@ struct ContentView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     } else if isFollowUpQuestionDay && journalViewModel.currentFollowUpQuestion.isEmpty {
                         // If it's a follow-up day but no eligible past entry found, show static open question
-                        Text("Looking at today or yesterday, share moments, thoughts, or prayers that stood out.")
+                        Text("Looking at today or yesterday, share moments or thoughts that stood out.")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(Color.textBlue)
                         .multilineTextAlignment(.center)
@@ -611,7 +611,7 @@ struct ContentView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     } else {
                         // Regular Open Question
-                        Text("Looking at today or yesterday, share moments, thoughts, or prayers that stood out.")
+                        Text("Looking at today or yesterday, share moments or thoughts that stood out.")
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(Color.textBlue)
                             .multilineTextAlignment(.center)
@@ -2102,7 +2102,7 @@ Important: Keep reasoning minimal and respond directly.
         let mostRecentGoal = journalViewModel.goals.first?.goals ?? ""
         
         // Create the AI prompt text with replacements
-        let aiPromptText = createAIPromptText(content: openJournalResponse, goal: mostRecentGoal, questionText: "Looking at today or yesterday, share moments, thoughts, or prayers that stood out")
+        let aiPromptText = createAIPromptText(content: openJournalResponse, goal: mostRecentGoal, questionText: "Looking at today or yesterday, share moments or thoughts that stood out")
         
         // Update the current open question journal entry with the AI prompt
         await journalViewModel.updateCurrentOpenQuestionJournalEntryWithAIPrompt(aiPrompt: aiPromptText)
