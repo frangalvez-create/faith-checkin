@@ -1070,7 +1070,7 @@ struct ContentView: View {
                 .font(.system(size: 10))
                 .foregroundColor(Color(hex: "545555"))
                 .opacity(0.8)
-                .multilineTextAlignment(.leading)
+                .multilineTextAlignment(.center)
                 .lineLimit(nil)
         }
         .padding(.horizontal, 20)
