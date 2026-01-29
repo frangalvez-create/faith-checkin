@@ -71,83 +71,66 @@ Do NOT exceed ~200 words in paragraph 2.
             systemMessage = nil
         }
         
-        // GPT-5 uses different endpoint and structure
-        // GPT-5-mini uses standard /v1/chat/completions endpoint
+        // GPT-5 uses different endpoint and structure depending on use case
+        // Guided/open questions (journal): gpt-5 via /v1/chat/completions with reasoning capped at 800
+        // Analyzer (weekly/monthly): gpt-5 via /v1/responses
+        // gpt-5-mini: /v1/chat/completions
         let isGPT5 = model == "gpt-5"
+        let useJournalGpt5Format = isGPT5 && analysisType == "journal"  // guided & open questions
+        let useResponsesEndpoint = isGPT5 && analysisType != "journal" // analyzer only
         
-        // Create the request body - different structure for GPT-5 vs other models
+        // Create the request body - different structure per case
         let requestBody: [String: Any]
         let apiURL: URL
         
-        if isGPT5 {
-            // GPT-5 uses /v1/responses endpoint with new structure
+        if useJournalGpt5Format {
+            // Guided & open questions: gpt-5 via chat/completions – no "reasoning" (API rejects it), use system + user, top_p
+            apiURL = chatCompletionsURL
+            requestBody = [
+                "model": "gpt-5",
+                "max_completion_tokens": 2000,
+                "temperature": 1,
+                "top_p": 1,
+                "messages": [
+                    [
+                        "role": "system",
+                        "content": "Keep internal reasoning minimal. Do not plan extensively. Do not justify your output. Respond directly and concisely."
+                    ],
+                    ["role": "user", "content": prompt]
+                ]
+            ]
+        } else if useResponsesEndpoint {
+            // GPT-5 analyzer uses /v1/responses endpoint with new structure
             apiURL = responsesURL
             var body: [String: Any] = [
                 "model": model,
                 "input": []
             ]
             
-            // Only add system message if it exists (for analyzer calls)
             if let systemMessage = systemMessage {
                 body["input"] = [
-                    [
-                        "role": "system",
-                        "content": systemMessage
-                    ],
-                    [
-                        "role": "user",
-                        "content": prompt
-                    ]
+                    ["role": "system", "content": systemMessage],
+                    ["role": "user", "content": prompt]
                 ]
             } else {
-                // For journal entries, just use the user prompt
-                body["input"] = [
-                    [
-                        "role": "user",
-                        "content": prompt
-                    ]
-                ]
+                body["input"] = [["role": "user", "content": prompt]]
             }
             
-            // Set max_output_tokens - increased to 2000 for all types to accommodate reasoning tokens
-            // Reasoning tokens count against the output limit, so we need more tokens for complete responses
-            // Previously journal entries used 600, but reasoning can consume 500-600 tokens, leaving little for response
-            let maxTokens = 2000
-            body["max_output_tokens"] = maxTokens
-            
-            // Only enable reasoning for analyzer calls (weekly/monthly) - disable for journal entries
-            // Journal entries are straightforward responses and don't need complex reasoning
-            // This saves ~500-600 tokens per journal entry response
-            if analysisType != "journal" {
-                body["reasoning"] = ["effort": "low"]
-            }
-            // For journal entries, omit reasoning parameter entirely to save tokens
+            body["max_output_tokens"] = 2000
             requestBody = body
         } else {
-            // GPT-5-mini and other models use /v1/chat/completions endpoint with standard structure
+            // GPT-5-mini and other models use /v1/chat/completions endpoint
             apiURL = chatCompletionsURL
             var messages: [[String: Any]] = []
-            
-            // Only add system message if it exists (for analyzer calls)
             if let systemMessage = systemMessage {
-                messages.append([
-                    "role": "system",
-                    "content": systemMessage
-                ])
+                messages.append(["role": "system", "content": systemMessage])
             }
+            messages.append(["role": "user", "content": prompt])
             
-            // Always add user message
-            messages.append([
-                "role": "user",
-                "content": prompt
-            ])
-            
-            // Other models (gpt-5-mini) use /v1/chat/completions endpoint
-            // Note: Journal entries now use gpt-5-mini (no reasoning tokens), analyzer uses gpt-5
             requestBody = [
                 "model": model,
                 "messages": messages,
-                "max_completion_tokens": 2000  // Increased from 300 to 2000 for journal entries
+                "max_completion_tokens": 2000
             ]
         }
         
@@ -214,8 +197,8 @@ Do NOT exceed ~200 words in paragraph 2.
                 throw OpenAIError.invalidResponse("Invalid JSON response")
             }
             
-            // Extract the AI response content - different parsing for GPT-5 vs other models
-            if isGPT5 {
+            // Extract the AI response content - different parsing for /v1/responses vs /v1/chat/completions
+            if useResponsesEndpoint {
                 // GPT-5 /v1/responses endpoint structure
                 // Response format: { "output": [{ "type": "reasoning" }, { "type": "message", "content": [...] }] }
                 if let output = json["output"] as? [[String: Any]] {

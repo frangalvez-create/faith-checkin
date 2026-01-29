@@ -461,9 +461,8 @@ class JournalViewModel: ObservableObject {
             print("🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀")
             
             // Generate AI response using OpenAI with retry logic
-            // Use "journal" analysisType to avoid adding analyzer system message
-            // Use gpt-5-mini (no reasoning tokens) with 2000 tokens for journal entries
-            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5-mini", analysisType: "journal")
+            // Use "journal" analysisType to trigger gpt-5 + chat/completions with reasoning { mode: "low", max_tokens: 800 }, temperature 0.3
+            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5", analysisType: "journal")
             
             print("✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅")
             print("✅ AI RESPONSE SUCCESS - Length: \(aiResponse.count) characters")
@@ -767,9 +766,8 @@ class JournalViewModel: ObservableObject {
             print("🤖 Generating Open Question AI response for prompt: \(aiPrompt.prefix(100))...")
             
             // Generate AI response using OpenAI with retry logic
-            // Use "journal" analysisType to avoid adding analyzer system message
-            // Use gpt-5-mini (no reasoning tokens) with 2000 tokens for journal entries
-            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5-mini", analysisType: "journal")
+            // Use "journal" analysisType to trigger gpt-5 + chat/completions with reasoning { mode: "low", max_tokens: 800 }, temperature 0.3
+            let aiResponse = try await generateAIResponseWithRetry(for: aiPrompt, model: "gpt-5", analysisType: "journal")
             
             // Create updated entry with AI response
             let tagsArray: [String] = Array(mostRecentEntry.tags)

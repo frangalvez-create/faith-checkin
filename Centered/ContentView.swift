@@ -1023,15 +1023,14 @@ struct ContentView: View {
             )
         }
         
-        // Emergency Support Reminder - 175pt below Goal text field
+        // Donate section - 175pt below Goal text field
         VStack(spacing: 8) {
-            Text("Emergency Support Reminder")
-                .font(.system(size: 11, weight: .bold))
-                .foregroundColor(Color(hex: "545555"))
+            Link("Donate Here", destination: URL(string: "https://centeredselfapp.com/donate")!)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(Color(hex: "772C2C"))
                 .opacity(0.8)
-                .multilineTextAlignment(.center)
             
-            Text("If you are experiencing a crisis or thinking about harming yourself, do not rely on this App. Call 988 in the U.S. or your local emergency number.")
+            Text("This app is free with no subscriptions or ads and only runs on donations. If you feel this app has helped you in any way, please consider making a donation to keep the app going. Thank you for your support!")
                 .font(.system(size: 10))
                 .foregroundColor(Color(hex: "545555"))
                 .opacity(0.8)
@@ -2626,7 +2625,7 @@ Important: Keep reasoning minimal and respond directly.
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(Color(hex: "3F5E82"))
                         .multilineTextAlignment(.center)
-                    Text("Run Analyze to see your top moods for the week.")
+                    Text("Run Analyze below to see your top moods for the week.")
                         .font(.system(size: 13))
                         .foregroundColor(Color(hex: "3F5E82").opacity(0.7))
                         .multilineTextAlignment(.center)
@@ -2965,7 +2964,7 @@ Important: Keep reasoning minimal and respond directly.
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(Color(hex: "3F5E82"))
                         .multilineTextAlignment(.center)
-                    Text("Run Analyze to see your weekly or monthly summary.")
+                    Text("Run Analyze below to see your weekly or monthly summary.")
                         .font(.system(size: 13))
                         .foregroundColor(Color(hex: "3F5E82").opacity(0.7))
                         .multilineTextAlignment(.center)

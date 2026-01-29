@@ -211,7 +211,7 @@ struct ContentView: View {
                     // Custom Tab Bar
                     customTabBar
                 }
-                .background(Color(hex: "E4DCC9"))
+                .background(Color(hex: "E3E0C9"))
                 .ignoresSafeArea(.all)
                 .overlay(
                     // Info Popup
@@ -269,7 +269,7 @@ struct ContentView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(hex: "E4DCC9"))
+        .background(Color(hex: "E3E0C9"))
         .ignoresSafeArea(.all)
         .allowsHitTesting(true) // Block all interactions
         .onAppear {
@@ -1059,15 +1059,14 @@ struct ContentView: View {
             )
         }
         
-        // Emergency Support Reminder - 175pt below Goal text field
+        // Donate section - 175pt below Goal text field
         VStack(spacing: 8) {
-            Text("Emergency Support Reminder")
-                .font(.system(size: 11, weight: .bold))
-                .foregroundColor(Color(hex: "545555"))
+            Link("Donate Here", destination: URL(string: "https://centeredselfapp.com/donate")!)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(Color(hex: "772C2C"))
                 .opacity(0.8)
-                .multilineTextAlignment(.center)
             
-            Text("If you are experiencing a crisis or thinking about harming yourself, do not rely on this App. Call 988 in the U.S. or your local emergency number.")
+            Text("This app is free with no subscriptions or ads and only runs on donations. If you feel this app has helped you in any way, please consider making a donation to keep the app going. Thank you for your support!")
                 .font(.system(size: 10))
                 .foregroundColor(Color(hex: "545555"))
                 .opacity(0.8)
@@ -2640,7 +2639,7 @@ Important: Keep reasoning minimal and respond directly.
                 Spacer(minLength: 100)
             }
         }
-        .background(Color(hex: "E4DCC9"))
+        .background(Color(hex: "E3E0C9"))
         .ignoresSafeArea(.all, edges: .top)
     }
     
@@ -2999,7 +2998,7 @@ Important: Keep reasoning minimal and respond directly.
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(Color(hex: "772C2C"))
                         .multilineTextAlignment(.center)
-                    Text("Run Analyze to see your weekly or monthly summary.")
+                    Text("Run Analyze below to see your weekly or monthly summary.")
                         .font(.system(size: 13))
                         .foregroundColor(Color(hex: "772C2C").opacity(0.7))
                         .multilineTextAlignment(.center)
@@ -3206,7 +3205,7 @@ Important: Keep reasoning minimal and respond directly.
                     List {
                         ForEach(journalViewModel.favoriteJournalEntries) { entry in
                             favoriteEntryView(entry: entry)
-                                .listRowBackground(Color(hex: "E4DCC9"))
+                                .listRowBackground(Color(hex: "E3E0C9"))
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: 7.5, leading: 8, bottom: 7.5, trailing: 8))
                         }
@@ -3221,7 +3220,7 @@ Important: Keep reasoning minimal and respond directly.
                     .scrollContentBackground(.hidden)
                 }
             }
-            .background(Color(hex: "E4DCC9"))
+            .background(Color(hex: "E3E0C9"))
             
             // Edit Button positioned at top-right with functionality
             Button(action: {
@@ -3418,7 +3417,7 @@ Important: Keep reasoning minimal and respond directly.
         .padding(.horizontal, 20)
         .padding(.top, -5)
         .padding(.bottom, 22)
-        .background(Color(hex: "E4DCC9"))
+        .background(Color(hex: "E3E0C9"))
         .frame(height: 75) // Updated to 75pt height
     }
     
@@ -3506,7 +3505,7 @@ Important: Keep reasoning minimal and respond directly.
                 
             }
             .padding(16)
-            .background(Color(hex: "E4DCC9"))
+            .background(Color(hex: "E3E0C9"))
             .cornerRadius(16)
             .shadow(radius: 10)
             .padding(.horizontal, 20)
@@ -3566,7 +3565,7 @@ Important: Keep reasoning minimal and respond directly.
                 
             }
             .padding(16)
-            .background(Color(hex: "E4DCC9"))
+            .background(Color(hex: "E3E0C9"))
             .cornerRadius(16)
             .shadow(radius: 10)
             .padding(.horizontal, 20)
@@ -3603,7 +3602,7 @@ Important: Keep reasoning minimal and respond directly.
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(16)
-            .background(Color(hex: "E4DCC9"))
+            .background(Color(hex: "E3E0C9"))
             .cornerRadius(16)
             .shadow(radius: 10)
             .padding(.horizontal, 20)
@@ -3908,7 +3907,7 @@ Important: Keep reasoning minimal and respond directly.
 // Color Extensions
 extension Color {
     static let textBlue = Color(hex: "#772C2C")
-    static let backgroundBeige = Color(hex: "#E4DCC9")
+    static let backgroundBeige = Color(hex: "#E3E0C9")
     static let textFieldBackground = Color(hex: "#F5F4EB")
     static let textGrey = Color(hex: "#545555")
     
