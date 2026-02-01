@@ -75,7 +75,8 @@ Do NOT exceed ~200 words in paragraph 2.
         // Guided/open questions (journal): gpt-5 via /v1/chat/completions with reasoning capped at 800
         // Analyzer (weekly/monthly): gpt-5 via /v1/responses
         // gpt-5-mini: /v1/chat/completions
-        let isGPT5 = model == "gpt-5"
+        // Support versioned model IDs (e.g. gpt-5-2025-08-07)
+        let isGPT5 = model == "gpt-5" || model.hasPrefix("gpt-5-")
         let useJournalGpt5Format = isGPT5 && analysisType == "journal"  // guided & open questions
         let useResponsesEndpoint = isGPT5 && analysisType != "journal" // analyzer only
         
@@ -298,6 +299,28 @@ Do NOT exceed ~200 words in paragraph 2.
                         if !assembled.isEmpty {
                             print("✅ OpenAI API response received (delta block format): \(assembled.prefix(100))...")
                             return assembled
+                        }
+                    }
+                }
+            }
+            
+            // Universal fallback: try parsing Responses API output format regardless of branch
+            // Handles versioned model IDs and format variations
+            if let output = json["output"] as? [[String: Any]] {
+                for outputItem in output {
+                    if let type = outputItem["type"] as? String, type == "message" {
+                        if let contentArray = outputItem["content"] as? [[String: Any]] {
+                            let assembled = contentArray.compactMap { block -> String? in
+                                let blockType = block["type"] as? String
+                                if blockType == "output_text" || blockType == "text" {
+                                    return block["text"] as? String
+                                }
+                                return nil
+                            }.joined()
+                            if !assembled.isEmpty {
+                                print("✅ OpenAI API response received (fallback output_text format): \(assembled.prefix(100))...")
+                                return assembled
+                            }
                         }
                     }
                 }

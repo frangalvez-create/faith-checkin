@@ -2420,7 +2420,8 @@ class JournalViewModel: ObservableObject {
             // If all retries fail, the entry will be deleted in the catch block
             let aiResponse: String
             do {
-                let timeoutSeconds: TimeInterval = analysisType == "monthly" ? 60.0 : 30.0
+                // GPT-5 with reasoning tokens can take 45–90+ seconds; use 60s for weekly, 90s for monthly
+                let timeoutSeconds: TimeInterval = analysisType == "monthly" ? 90.0 : 60.0
                 print("⏱️ Setting timeout for \(analysisType) analysis: \(timeoutSeconds) seconds, using GPT-5 model")
                 aiResponse = try await withTimeout(seconds: timeoutSeconds) {
                     try await self.generateAIResponseWithRetry(for: analyzerPrompt, model: "gpt-5", analysisType: analysisType)
