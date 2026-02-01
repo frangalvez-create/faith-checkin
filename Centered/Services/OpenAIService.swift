@@ -111,8 +111,8 @@ Do NOT exceed ~200 words in paragraph 2.
             }
             
             // Set max_output_tokens based on analysis type
-            // Analyzer calls use 2000, journal entries use 600
-            let maxTokens = analysisType == "journal" ? 600 : 2000
+            // Analyzer uses 4000 (reasoning + visible output share limit; GPT-5 reasoning can use ~1.7k tokens)
+            let maxTokens = analysisType == "journal" ? 600 : 4000
             body["max_output_tokens"] = maxTokens
             body["reasoning"] = ["effort": "low"]
             requestBody = body

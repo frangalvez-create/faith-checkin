@@ -2943,9 +2943,7 @@ Important: Keep reasoning minimal and respond directly.
                 .frame(maxWidth: .infinity, alignment: .center)
             
             if let summaryText = analyzerViewModel.summaryText, !summaryText.isEmpty {
-                Text(formatSummaryText(summaryText))
-                    .font(.system(size: 15))
-                    .foregroundColor(Color(hex: "3F5E82"))
+                formattedSummaryView(summaryText, textColor: "3F5E82")
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
@@ -2964,7 +2962,7 @@ Important: Keep reasoning minimal and respond directly.
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(Color(hex: "3F5E82"))
                         .multilineTextAlignment(.center)
-                    Text("Run Analyze below to see your weekly or monthly summary.")
+                    Text("Click Analyze below to see your weekly or monthly summary.")
                         .font(.system(size: 13))
                         .foregroundColor(Color(hex: "3F5E82").opacity(0.7))
                         .multilineTextAlignment(.center)
@@ -3113,20 +3111,42 @@ Important: Keep reasoning minimal and respond directly.
         analyzerViewModel.determineAnalysisAvailability(for: Date(), allEntries: journalViewModel.analyzerEntries)
     }
     
-    private func formatSummaryText(_ text: String) -> String {
-        // Split by lines starting with "- " and add double newline spacing between bullet points
-        let lines = text.components(separatedBy: .newlines)
-        var formattedLines: [String] = []
-        
-        for (index, line) in lines.enumerated() {
-            if line.hasPrefix("- ") && index > 0 {
-                // Add empty line before bullet point (except the first one)
-                formattedLines.append("")
+    @ViewBuilder
+    private func formattedSummaryView(_ text: String, textColor: String) -> some View {
+        let normalizedText = text.replacingOccurrences(of: "\u{2019}", with: "'")
+        let nextGoalMarker = "Next Week's Goal:"
+        if let range = normalizedText.range(of: nextGoalMarker) {
+            let summaryPart = String(normalizedText[..<range.lowerBound]).trimmingCharacters(in: .whitespacesAndNewlines)
+            let goalPart = String(normalizedText[range.upperBound...]).trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            let summaryLabel = "Summary:"
+            let summaryContent = summaryPart.hasPrefix(summaryLabel)
+                ? String(summaryPart.dropFirst(summaryLabel.count)).trimmingCharacters(in: CharacterSet(charactersIn: " "))
+                : summaryPart
+            
+            VStack(alignment: .leading, spacing: 12) {
+                (Text(summaryLabel).fontWeight(.bold) + Text(summaryContent.isEmpty ? "" : " \(summaryContent)"))
+                    .font(.system(size: 15))
+                    .foregroundColor(Color(hex: textColor))
+                    .multilineTextAlignment(.leading)
+                
+                (Text("Next Week's Goal:").fontWeight(.bold) + Text(goalPart.isEmpty ? "" : " \(goalPart)"))
+                    .font(.system(size: 15))
+                    .foregroundColor(Color(hex: textColor))
+                    .multilineTextAlignment(.leading)
             }
-            formattedLines.append(line)
+        } else if normalizedText.hasPrefix("Summary:") {
+            let content = String(normalizedText.dropFirst(8)).trimmingCharacters(in: .whitespaces)
+            (Text("Summary:").fontWeight(.bold) + Text(" \(content)"))
+                .font(.system(size: 15))
+                .foregroundColor(Color(hex: textColor))
+                .multilineTextAlignment(.leading)
+        } else {
+            Text(normalizedText)
+                .font(.system(size: 15))
+                .foregroundColor(Color(hex: textColor))
+                .multilineTextAlignment(.leading)
         }
-        
-        return formattedLines.joined(separator: "\n")
     }
     
     @State private var isEditingFavorites = false

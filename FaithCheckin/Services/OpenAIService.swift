@@ -117,7 +117,7 @@ Do NOT exceed ~200 words in paragraph 2.
                 body["input"] = [["role": "user", "content": prompt]]
             }
             
-            body["max_output_tokens"] = 2000
+            body["max_output_tokens"] = 4000
             requestBody = body
         } else {
             // GPT-5-mini and other models use /v1/chat/completions endpoint

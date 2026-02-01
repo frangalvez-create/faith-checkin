@@ -1573,9 +1573,10 @@ Output format (exactly):
 1st paragraph:
 mood1(#), mood2(#), mood3(#)
 
-2nd paragraph (two bullets):
-- Summary: <summary of user's spiritual journey and reflections>
-- Action & goal for next week: <faith-based action steps + weekly spiritual goal>
+2nd paragraph (two sections separated by a blank line):
+Summary: <summary of user's spiritual journey and reflections>
+
+Next Week's Goal: <faith-based action steps + weekly spiritual goal>
 
 3rd paragraph:
 <faith score only, number from 60–100>
@@ -1601,9 +1602,10 @@ Output format (exactly):
 1st paragraph:
 mood1(#), mood2(#), mood3(#), mood4(#)
 
-2nd paragraph (two bullets):
-- Summary: <summary of user's spiritual journey and reflections>
-- Action & goal for next week: <faith-based action steps + weekly spiritual goal>
+2nd paragraph (two sections separated by a blank line):
+Summary: <summary of user's spiritual journey and reflections>
+
+Next Week's Goal: <faith-based action steps + weekly spiritual goal>
 
 3rd paragraph:
 <score only, number from 60–100>

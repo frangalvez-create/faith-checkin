@@ -1573,9 +1573,10 @@ Output format (exactly):
 1st paragraph:
 mood1(#), mood2(#), mood3(#)
 
-2nd paragraph (two bullets):
-- Summary: <summary of user input>
-- Action & goal for next week: <action steps + weekly goal>
+2nd paragraph (two sections separated by a blank line):
+Summary: <summary of user input>
+
+Next Week's Goal: <action steps + weekly goal>
 
 3rd paragraph:
 <score only, number from 60–100>
@@ -1600,9 +1601,10 @@ Output format (exactly):
 1st paragraph:
 mood1(#), mood2(#), mood3(#), mood4(#)
 
-2nd paragraph (two bullets):
-- Summary: <summary of user input>
-- Action & goal for next week: <action steps + weekly goal>
+2nd paragraph (two sections separated by a blank line):
+Summary: <summary of user input>
+
+Next Week's Goal: <action steps + weekly goal>
 
 3rd paragraph:
 <score only, number from 60–100>

@@ -204,9 +204,14 @@ class AnalyzerViewModel: ObservableObject {
     private func parseSummaryText(from response: String) -> String? {
         let trimmedResponse = response.trimmingCharacters(in: .whitespacesAndNewlines)
         let paragraphs = trimmedResponse.components(separatedBy: "\n\n")
-        guard paragraphs.count >= 2 else { return nil }
-        let summaryParagraph = paragraphs[1].trimmingCharacters(in: .whitespacesAndNewlines)
-        return summaryParagraph.isEmpty ? nil : summaryParagraph
+        guard paragraphs.count >= 3 else { return nil }
+        // Paragraphs: [0]=moods, [1]=Summary, [2]=Next Week's Goal, [last]=score
+        let contentParagraphs = paragraphs[1..<(paragraphs.count - 1)]
+        let summaryAndGoal = contentParagraphs
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+            .joined(separator: "\n\n")
+        return summaryAndGoal.isEmpty ? nil : summaryAndGoal
     }
     
     /// Determines if analysis should be weekly or monthly based on date
