@@ -1059,22 +1059,26 @@ struct ContentView: View {
             )
         }
         
-        // Donate section - 175pt below Goal text field
-        VStack(spacing: 8) {
-            Link("Donate Here", destination: URL(string: "https://centeredselfapp.com/donate")!)
-                .font(.system(size: 13, weight: .bold))
-                .foregroundColor(Color(hex: "772C2C"))
-                .opacity(0.8)
-            
-            Text("This app is free with no subscriptions or ads and only runs on donations. If you feel this app has helped you in any way, please consider making a donation to keep the app going. Thank you for your support!")
-                .font(.system(size: 10))
-                .foregroundColor(Color(hex: "545555"))
-                .opacity(0.8)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-        }
-        .padding(.horizontal, 20)
-        .padding(.top, 175)
+        // MARK: - Donate section (commented out - restore if needed)
+        // VStack(spacing: 8) {
+        //     Link("Donate Here", destination: URL(string: "https://centeredselfapp.com/donate")!)
+        //         .font(.system(size: 13, weight: .bold))
+        //         .foregroundColor(Color(hex: "772C2C"))
+        //         .opacity(0.8)
+        //
+        //     Text("This app is free with no subscriptions or ads and only runs on donations. If you feel this app has helped you in any way, please consider making a donation to keep the app going. Thank you for your support!")
+        //         .font(.system(size: 10))
+        //         .foregroundColor(Color(hex: "545555"))
+        //         .opacity(0.8)
+        //         .multilineTextAlignment(.center)
+        //         .lineLimit(nil)
+        // }
+        // .padding(.horizontal, 20)
+        // .padding(.top, 175)
+        
+        // Restore original space between goal field and tab bar (175pt padding + ~70pt donate content height)
+        Color.clear
+            .frame(height: 245)
         
         // Add bottom padding for future navigation tabs
         Spacer(minLength: 5) // Extra space at bottom for navigation tabs
