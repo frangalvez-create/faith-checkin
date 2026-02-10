@@ -2959,7 +2959,7 @@ Important: Keep reasoning minimal and respond directly.
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(Color(hex: "3F5E82"))
                         .multilineTextAlignment(.center)
-                    Text("Click Analyze below to see your weekly or monthly summary.")
+                    Text("Tap the Analyze button to see your weekly or monthly summary.")
                         .font(.system(size: 13))
                         .foregroundColor(Color(hex: "3F5E82").opacity(0.7))
                         .multilineTextAlignment(.center)
