@@ -289,26 +289,33 @@ struct ContentView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 0) {
-            // Date and Streak - positioned at top, scrolls with content
+            // Date and Refresh - positioned at top, scrolls with content
             HStack {
                 Text(formatCurrentDate())
                     .font(.system(size: 14))
                     .foregroundColor(Color(hex: "545555").opacity(1.0))
-                    .padding(.top, 45)
+                    .padding(.top, 28)
                     .padding(.leading, 38)
                 
                 Spacer()
                 
-                Text("Streak: \(journalViewModel.calculateEntryStreak())")
-                    .font(.system(size: 14))
-                    .foregroundColor(Color(hex: "545555").opacity(1.0))
-                    .padding(.top, 45)
-                    .padding(.trailing, 30)
+                Button {
+                    showLoadingView = true
+                } label: {
+                    Image("Refresh Button")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 57, height: 57)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 28)
+                .padding(.trailing, 30)
             }
             
             // Top Logo (CS Logo.png)
             SafeImage("CS Logo", height: 80)
-                .padding(.top, -2)
+                .padding(.top, -25)
             
             // Daily Journal Title (DJ.png) - Reduced to 2/3 size
             Image("DJ")
@@ -1057,29 +1064,6 @@ struct ContentView: View {
                 .offset(x: 330, y: 10), // 330pt to the right, 10pt down
                 alignment: .topLeading
             )
-            .overlay(alignment: .bottom) {
-                // Swipe down hint - anchored to bottom center of goal text field; tapping HERE triggers refresh
-                VStack(spacing: 2) {
-                    Text("Swipe down to refresh daily questions.")
-                    HStack(spacing: 0) {
-                        Text("Or tap ")
-                        Button("HERE") {
-                            showLoadingView = true
-                        }
-                        .buttonStyle(.plain)
-                        .font(.system(size: 12))
-                        .italic()
-                        .foregroundColor(Color(hex: "772C2C"))
-                    }
-                }
-                .font(.system(size: 12))
-                .italic()
-                .foregroundColor(Color(hex: "545555"))
-                .opacity(0.8)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
-                .offset(x: 0, y: 120)
-            }
         }
         
             // Donation body (title hidden)
