@@ -1057,33 +1057,51 @@ struct ContentView: View {
                 .offset(x: 330, y: 10), // 330pt to the right, 10pt down
                 alignment: .topLeading
             )
+            .overlay(alignment: .bottom) {
+                // Swipe down hint - anchored to bottom center of goal text field; tapping HERE triggers refresh
+                VStack(spacing: 2) {
+                    Text("Swipe down to refresh daily questions.")
+                    HStack(spacing: 0) {
+                        Text("Or tap ")
+                        Button("HERE") {
+                            showLoadingView = true
+                        }
+                        .buttonStyle(.plain)
+                        .font(.system(size: 12))
+                        .italic()
+                        .foregroundColor(Color(hex: "772C2C"))
+                    }
+                }
+                .font(.system(size: 12))
+                .italic()
+                .foregroundColor(Color(hex: "545555"))
+                .opacity(0.8)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .offset(x: 0, y: 120)
+            }
         }
         
-        // MARK: - Donate section (commented out - restore if needed)
-        // VStack(spacing: 8) {
-        //     Link("Donate Here", destination: URL(string: "https://centeredselfapp.com/donate")!)
-        //         .font(.system(size: 13, weight: .bold))
-        //         .foregroundColor(Color(hex: "772C2C"))
-        //         .opacity(0.8)
-        //
-        //     Text("This app is free with no subscriptions or ads and only runs on donations. If you feel this app has helped you in any way, please consider making a donation to keep the app going. Thank you for your support!")
-        //         .font(.system(size: 10))
-        //         .foregroundColor(Color(hex: "545555"))
-        //         .opacity(0.8)
-        //         .multilineTextAlignment(.center)
-        //         .lineLimit(nil)
-        // }
-        // .padding(.horizontal, 20)
-        // .padding(.top, 175)
-        
-        // Restore original space between goal field and tab bar (175pt padding + ~70pt donate content height)
-        Color.clear
-            .frame(height: 245)
-        
-        // Add bottom padding for future navigation tabs
-        Spacer(minLength: 5) // Extra space at bottom for navigation tabs
+            // Donation body (title hidden)
+            VStack(spacing: 8) {
+                Link("Donate Here", destination: URL(string: "https://centeredselfapp.com/donate")!)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(Color(hex: "772C2C"))
+                    .opacity(0.8)
+                    .hidden()
+                Text("This app is free with no subscriptions or ads. Our goal is to help as many people as we can to become more balanced. If we've helped you, please contact and support us [here](https://www.centeredselfapp.com/#contact-us).")
+                    .font(.system(size: 10))
+                    .foregroundColor(Color(hex: "545555"))
+                    .opacity(0.8)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
             }
-            .padding(.bottom, 50) // Additional padding for navigation tabs
+            .padding(.horizontal, 20)
+            .padding(.top, 200)
+            .padding(.bottom, 0)
+            .frame(maxWidth: .infinity)
+            }
+            .padding(.bottom, 10) // 10pt above tab bar
             }
             .background(Color.backgroundBeige)
             .ignoresSafeArea(.all, edges: .top)
@@ -3915,13 +3933,13 @@ Important: Keep reasoning minimal and respond directly.
             // Check retry attempt status
             switch journalViewModel.currentRetryAttempt {
             case 1:
-                return "Generating..."
+                return "Scanning the Bible and other sources... do not tap away... "
             case 2:
                 return "Retrying..."
             case 3:
                 return "Retrying again..."
             default:
-                return "Generating..."
+                return "Scanning the Bible and other sources... do not tap away... "
             }
         } else {
             return "Saving..."
